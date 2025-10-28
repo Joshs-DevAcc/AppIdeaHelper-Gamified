@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Idea Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="hero__eyebrow">App Idea Helper</p>
+        <h1>Shape your next big idea into a build-ready brief</h1>
+        <p class="hero__subtitle">
+          Walk through a guided brainstorm to clarify your audience, problem, and solution. Finish with a beautifully formatted prompt you can hand to any AI app builder.
+        </p>
+      </div>
+      <div class="hero__glass">
+        <div class="hero__spark"></div>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="progress">
+        <h2>Brainstorm steps</h2>
+        <ol class="progress__list" id="progressList">
+          <li class="progress__item active">Vision</li>
+          <li class="progress__item">Audience</li>
+          <li class="progress__item">Problem</li>
+          <li class="progress__item">Solution</li>
+          <li class="progress__item">Differentiators</li>
+          <li class="progress__item">Business</li>
+          <li class="progress__item">Tone & Extras</li>
+          <li class="progress__item">Review & Prompt</li>
+        </ol>
+      </aside>
+
+      <section class="flow">
+        <form class="flow__card" id="ideaForm">
+          <div class="step active" data-step="0">
+            <h3>Start with the big picture</h3>
+            <p class="step__intro">Give your idea a working title and write a quick elevator pitch.</p>
+            <label class="field">
+              <span>App Name</span>
+              <input type="text" id="appName" placeholder="e.g. SparkLaunch" autocomplete="off">
+            </label>
+            <label class="field">
+              <span>Elevator Pitch</span>
+              <textarea id="pitch" rows="3" placeholder="Explain your vision in one or two sentences"></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="1">
+            <h3>Who are you building for?</h3>
+            <p class="step__intro">Describe the ideal user and what matters to them.</p>
+            <label class="field">
+              <span>User Persona</span>
+              <textarea id="persona" rows="4" placeholder="e.g. Busy solo founders who need help validating SaaS ideas"></textarea>
+            </label>
+            <label class="field">
+              <span>User Goals & Motivations</span>
+              <textarea id="motivation" rows="3" placeholder="What does success look like for them?"></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="2">
+            <h3>Clarify the core problem</h3>
+            <p class="step__intro">What pain point are you eliminating?</p>
+            <label class="field">
+              <span>Problem Statement</span>
+              <textarea id="problem" rows="4" placeholder="Describe the challenge in plain language"></textarea>
+            </label>
+            <label class="field">
+              <span>Current Alternatives</span>
+              <textarea id="alternatives" rows="3" placeholder="How do people solve this today?"></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="3">
+            <h3>Design the solution</h3>
+            <p class="step__intro">Capture the features that deliver value.</p>
+            <div class="field">
+              <span>Core Features</span>
+              <div class="chip-grid" id="featureChips">
+                <button type="button" class="chip" data-value="Guided questionnaire flow">Guided questionnaire flow</button>
+                <button type="button" class="chip" data-value="AI-powered idea suggestions">AI-powered idea suggestions</button>
+                <button type="button" class="chip" data-value="Real-time preview of final brief">Real-time preview of final brief</button>
+                <button type="button" class="chip" data-value="One-click prompt copying">One-click prompt copying</button>
+                <button type="button" class="chip" data-value="Export to PDF or doc">Export to PDF or doc</button>
+                <button type="button" class="chip" data-value="Team collaboration mode">Team collaboration mode</button>
+              </div>
+              <textarea id="features" rows="4" placeholder="Add any custom features or details"></textarea>
+            </div>
+          </div>
+
+          <div class="step" data-step="4">
+            <h3>Highlight what makes it special</h3>
+            <p class="step__intro">Why will people love this instead of competitors?</p>
+            <label class="field">
+              <span>Unique Value</span>
+              <textarea id="uniqueness" rows="4" placeholder="e.g. Gamified scoring keeps ideation fun"></textarea>
+            </label>
+            <label class="field">
+              <span>Proof or Inspiration</span>
+              <textarea id="evidence" rows="3" placeholder="Social proof, precedents, or inspiration sources"></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="5">
+            <h3>Think about the business model</h3>
+            <p class="step__intro">How could this app sustain itself?</p>
+            <label class="field">
+              <span>Monetization Strategy</span>
+              <textarea id="monetization" rows="3" placeholder="Free with upsells, subscription tiers, marketplace fees, etc."></textarea>
+            </label>
+            <label class="field">
+              <span>Success Metrics</span>
+              <textarea id="metrics" rows="3" placeholder="How will you measure success?"></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="6">
+            <h3>Add the finishing touches</h3>
+            <p class="step__intro">Set the tone for the AI builder and capture any extras.</p>
+            <label class="field">
+              <span>Product Voice & Tone</span>
+              <textarea id="tone" rows="3" placeholder="Friendly, playful, empowering, etc."></textarea>
+            </label>
+            <label class="field">
+              <span>Additional Notes</span>
+              <textarea id="notes" rows="3" placeholder="Integrations, accessibility requirements, launch timeline..."></textarea>
+            </label>
+          </div>
+
+          <div class="step" data-step="7">
+            <h3>Ready to build!</h3>
+            <p class="step__intro">Review your summary and copy the final prompt.</p>
+            <div class="summary" id="summary"></div>
+            <div class="prompt-card">
+              <div class="prompt-card__header">
+                <h4>AI Builder Prompt</h4>
+                <button type="button" class="copy-btn" id="copyBtn">Copy prompt</button>
+              </div>
+              <textarea id="finalPrompt" readonly rows="14"></textarea>
+              <p class="prompt-card__hint">Tip: Paste this directly into your favorite AI app builder to kickstart development.</p>
+            </div>
+          </div>
+
+          <footer class="form-nav">
+            <button type="button" class="nav-btn" id="prevBtn">Back</button>
+            <button type="button" class="nav-btn nav-btn--primary" id="nextBtn">Next</button>
+          </footer>
+        </form>
+      </section>
+    </main>
+
+    <div class="toast" id="toast">Prompt copied to clipboard</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
