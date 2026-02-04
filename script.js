@@ -501,6 +501,17 @@ const generateIdeas = async () => {
 const renderDeck = () => {
   const deck = el("swipeDeck");
   deck.innerHTML = "";
+  if (!appState.deck.length) {
+    deck.innerHTML = `
+      <div class="idea-card" style="position: relative;">
+        <div class="idea-card__section">
+          <h4>No ideas yet</h4>
+          <p class="muted">Generate a fresh deck to start swiping. Your saved ideas will appear in the Vault.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
   appState.deck.forEach((idea, index) => {
     const card = document.createElement("div");
     card.className = "idea-card";
@@ -573,13 +584,30 @@ const renderDeck = () => {
   attachCardActions();
 };
 
+const copyToClipboard = async (text) => {
+  if (!text) return;
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+};
+
 const attachCardActions = () => {
   document.querySelectorAll("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const ideaId = btn.dataset.copy;
       const idea = appState.deck.find((item) => item.id === ideaId) || appState.vault.find((item) => item.id === ideaId);
       if (idea) {
-        navigator.clipboard.writeText(idea.buildPrompt);
+        await copyToClipboard(idea.buildPrompt);
         showToast("Prompt copied");
       }
     });
@@ -597,13 +625,17 @@ const attachCardActions = () => {
 };
 
 const swipeCard = (direction) => {
-  if (!appState.deck.length) return;
+  if (!appState.deck.length) {
+    showToast("Generate a new deck first");
+    return;
+  }
   const card = appState.deck.shift();
   if (direction === "save") {
     appState.vault.unshift(card);
     saveVault();
     addXp(5, "Saved idea");
     addBadge("First Save");
+    updateFilters();
   } else {
     addXp(1, "Swipe");
   }
@@ -643,6 +675,7 @@ const updateVaultUI = () => {
 
   attachCardActions();
   saveVault();
+  updateFilters();
 };
 
 const updateLastBatch = () => {
@@ -795,6 +828,16 @@ const initEvents = () => {
     if (el("generate").classList.contains("view--active")) {
       if (event.key === "ArrowLeft") swipeCard("pass");
       if (event.key === "ArrowRight") swipeCard("save");
+      if (event.key === " ") {
+        event.preventDefault();
+        const topIdea = appState.deck[0];
+        if (topIdea) {
+          const card = document.querySelector(`#prompt-${topIdea.id}`);
+          if (card) {
+            card.classList.toggle("idea-card__prompt--expanded");
+          }
+        }
+      }
     }
   });
 };
