@@ -3,162 +3,274 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App Idea Helper</title>
+  <title>NovaIdea — App Idea Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="page">
-    <header class="hero">
-      <div class="hero__content">
-        <p class="hero__eyebrow">App Idea Helper</p>
-        <h1>Shape your next big idea into a build-ready brief</h1>
-        <p class="hero__subtitle">
-          Walk through a guided brainstorm to clarify your audience, problem, and solution. Finish with a beautifully formatted prompt you can hand to any AI app builder.
-        </p>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__logo">NI</div>
+        <div>
+          <p class="brand__eyebrow">NovaIdea</p>
+          <h1>App Idea Generator</h1>
+        </div>
       </div>
-      <div class="hero__glass">
-        <div class="hero__spark"></div>
+      <nav class="nav">
+        <button class="nav__link active" data-view="home">Home</button>
+        <button class="nav__link" data-view="prompt-builder">Prompt Builder</button>
+        <button class="nav__link" data-view="generate">Generate</button>
+        <button class="nav__link" data-view="vault">Vault</button>
+        <button class="nav__link" data-view="settings">Settings</button>
+      </nav>
+      <div class="profile">
+        <div class="level-badge" id="levelBadge">Level 1</div>
+        <div class="xp">
+          <span id="xpValue">0 XP</span>
+          <div class="xp__bar">
+            <div class="xp__fill" id="xpFill"></div>
+          </div>
+        </div>
       </div>
     </header>
 
-    <main class="workspace">
-      <aside class="progress">
-        <h2>Brainstorm steps</h2>
-        <ol class="progress__list" id="progressList">
-          <li class="progress__item active">Vision</li>
-          <li class="progress__item">Audience</li>
-          <li class="progress__item">Problem</li>
-          <li class="progress__item">Solution</li>
-          <li class="progress__item">Differentiators</li>
-          <li class="progress__item">Business</li>
-          <li class="progress__item">Tone & Extras</li>
-          <li class="progress__item">Review & Prompt</li>
-        </ol>
-      </aside>
-
-      <section class="flow">
-        <form class="flow__card" id="ideaForm">
-          <div class="step active" data-step="0">
-            <h3>Start with the big picture</h3>
-            <p class="step__intro">Give your idea a working title and write a quick elevator pitch.</p>
-            <label class="field">
-              <span>App Name</span>
-              <input type="text" id="appName" placeholder="e.g. SparkLaunch" autocomplete="off">
-            </label>
-            <label class="field">
-              <span>Elevator Pitch</span>
-              <textarea id="pitch" rows="3" placeholder="Explain your vision in one or two sentences"></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="1">
-            <h3>Who are you building for?</h3>
-            <p class="step__intro">Describe the ideal user and what matters to them.</p>
-            <label class="field">
-              <span>User Persona</span>
-              <textarea id="persona" rows="4" placeholder="e.g. Busy solo founders who need help validating SaaS ideas"></textarea>
-            </label>
-            <label class="field">
-              <span>User Goals & Motivations</span>
-              <textarea id="motivation" rows="3" placeholder="What does success look like for them?"></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="2">
-            <h3>Clarify the core problem</h3>
-            <p class="step__intro">What pain point are you eliminating?</p>
-            <label class="field">
-              <span>Problem Statement</span>
-              <textarea id="problem" rows="4" placeholder="Describe the challenge in plain language"></textarea>
-            </label>
-            <label class="field">
-              <span>Current Alternatives</span>
-              <textarea id="alternatives" rows="3" placeholder="How do people solve this today?"></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="3">
-            <h3>Design the solution</h3>
-            <p class="step__intro">Capture the features that deliver value.</p>
-            <div class="field">
-              <span>Core Features</span>
-              <div class="chip-grid" id="featureChips">
-                <button type="button" class="chip" data-value="Guided questionnaire flow">Guided questionnaire flow</button>
-                <button type="button" class="chip" data-value="AI-powered idea suggestions">AI-powered idea suggestions</button>
-                <button type="button" class="chip" data-value="Real-time preview of final brief">Real-time preview of final brief</button>
-                <button type="button" class="chip" data-value="One-click prompt copying">One-click prompt copying</button>
-                <button type="button" class="chip" data-value="Export to PDF or doc">Export to PDF or doc</button>
-                <button type="button" class="chip" data-value="Team collaboration mode">Team collaboration mode</button>
-              </div>
-              <textarea id="features" rows="4" placeholder="Add any custom features or details"></textarea>
+    <main class="views">
+      <section class="view view--active" id="home" aria-labelledby="home-title">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">Futuristic idea lab</p>
+            <h2 id="home-title">Find your next product spark in minutes.</h2>
+            <p class="lead">Swipe through polished app ideas, collect XP, and walk away with a build-ready prompt for any AI coding agent.</p>
+            <div class="cta-group">
+              <button class="cta" data-view-target="generate">Generate Ideas</button>
+              <button class="cta cta--ghost" data-view-target="prompt-builder">Build My Prompt</button>
             </div>
           </div>
-
-          <div class="step" data-step="4">
-            <h3>Highlight what makes it special</h3>
-            <p class="step__intro">Why will people love this instead of competitors?</p>
-            <label class="field">
-              <span>Unique Value</span>
-              <textarea id="uniqueness" rows="4" placeholder="e.g. Gamified scoring keeps ideation fun"></textarea>
-            </label>
-            <label class="field">
-              <span>Proof or Inspiration</span>
-              <textarea id="evidence" rows="3" placeholder="Social proof, precedents, or inspiration sources"></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="5">
-            <h3>Think about the business model</h3>
-            <p class="step__intro">How could this app sustain itself?</p>
-            <label class="field">
-              <span>Monetization Strategy</span>
-              <textarea id="monetization" rows="3" placeholder="Free with upsells, subscription tiers, marketplace fees, etc."></textarea>
-            </label>
-            <label class="field">
-              <span>Success Metrics</span>
-              <textarea id="metrics" rows="3" placeholder="How will you measure success?"></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="6">
-            <h3>Add the finishing touches</h3>
-            <p class="step__intro">Set the tone for the AI builder and capture any extras.</p>
-            <label class="field">
-              <span>Product Voice & Tone</span>
-              <textarea id="tone" rows="3" placeholder="Friendly, playful, empowering, etc."></textarea>
-            </label>
-            <label class="field">
-              <span>Additional Notes</span>
-              <textarea id="notes" rows="3" placeholder="Integrations, accessibility requirements, launch timeline..."></textarea>
-            </label>
-          </div>
-
-          <div class="step" data-step="7">
-            <h3>Ready to build!</h3>
-            <p class="step__intro">Review your summary and copy the final prompt.</p>
-            <div class="summary" id="summary"></div>
-            <div class="prompt-card">
-              <div class="prompt-card__header">
-                <h4>AI Builder Prompt</h4>
-                <button type="button" class="copy-btn" id="copyBtn">Copy prompt</button>
+          <div class="hero__glass">
+            <div class="glass-card">
+              <div class="glass-card__header">
+                <span>Daily Challenge</span>
+                <span class="pill" id="dailyReward">+25 XP</span>
               </div>
-              <textarea id="finalPrompt" readonly rows="14"></textarea>
-              <p class="prompt-card__hint">Tip: Paste this directly into your favorite AI app builder to kickstart development.</p>
+              <p id="dailyChallenge">Generate 10 ideas in a new domain.</p>
+              <button class="cta cta--ghost" id="completeChallenge">Mark complete</button>
+            </div>
+            <div class="hero__stats">
+              <div>
+                <p class="stat-label">Streak</p>
+                <p class="stat-value" id="streakValue">0 days</p>
+              </div>
+              <div>
+                <p class="stat-label">Saved</p>
+                <p class="stat-value" id="savedCount">0</p>
+              </div>
+              <div>
+                <p class="stat-label">Power-ups</p>
+                <p class="stat-value" id="powerUpCount">0</p>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="home-grid">
+          <div class="card">
+            <h3>Progress</h3>
+            <p class="muted">Earn XP for every swipe, save, and challenge. Level up to unlock visual themes.</p>
+            <div class="level-progress">
+              <span id="levelProgressLabel">Level 1 · 0 / 50 XP</span>
+              <div class="progress-bar">
+                <div class="progress-bar__fill" id="levelProgressFill"></div>
+              </div>
+            </div>
+            <div class="badges" id="badgeList"></div>
+          </div>
+          <div class="card">
+            <h3>Today’s Flow</h3>
+            <ul class="timeline">
+              <li>Build a prompt with the guided wizard.</li>
+              <li>Generate ideas in seconds.</li>
+              <li>Swipe, save, and export your favorites.</li>
+            </ul>
+            <button class="cta" data-view-target="prompt-builder">Start the wizard</button>
+          </div>
+        </div>
+      </section>
 
-          <footer class="form-nav">
-            <button type="button" class="nav-btn" id="prevBtn">Back</button>
-            <button type="button" class="nav-btn nav-btn--primary" id="nextBtn">Next</button>
-          </footer>
-        </form>
+      <section class="view" id="prompt-builder" aria-labelledby="prompt-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Prompt Builder</p>
+            <h2 id="prompt-title">Craft a perfect prompt in 8 quick steps.</h2>
+          </div>
+          <div class="wizard-progress" id="wizardProgress"></div>
+        </div>
+        <div class="wizard">
+          <aside class="wizard__steps" id="wizardSteps"></aside>
+          <div class="wizard__content">
+            <div class="wizard__panel" id="wizardPanel"></div>
+            <div class="wizard__nav">
+              <button class="cta cta--ghost" id="wizardPrev">Back</button>
+              <button class="cta" id="wizardNext">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="generate" aria-labelledby="generate-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Idea Generator</p>
+            <h2 id="generate-title">Spin up a deck of build-ready ideas.</h2>
+          </div>
+          <div class="mini-actions">
+            <button class="cta cta--ghost" id="rerollBtn">Reroll</button>
+            <button class="cta cta--ghost" id="enhanceBtn">Enhance</button>
+            <button class="cta cta--ghost" id="mashupBtn">Mashup</button>
+          </div>
+        </div>
+        <div class="generator">
+          <div class="generator__controls">
+            <label class="field">
+              <span>Base prompt</span>
+              <textarea id="basePrompt" rows="6" placeholder="Describe the kind of app you want. Or build one with the Prompt Builder."></textarea>
+            </label>
+            <div class="control-grid">
+              <label class="field">
+                <span>Quantity</span>
+                <select id="quantity">
+                  <option value="5">5 ideas</option>
+                  <option value="10">10 ideas</option>
+                  <option value="20">20 ideas</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Spice level</span>
+                <select id="spiceLevel">
+                  <option value="safe">Safe</option>
+                  <option value="balanced" selected>Balanced</option>
+                  <option value="wild">Wild</option>
+                </select>
+              </label>
+            </div>
+            <button class="cta" id="generateBtn">Generate Ideas</button>
+            <p class="muted">XP: +10 per batch, +1 per swipe, +5 per save.</p>
+            <div class="last-batch" id="lastBatch"></div>
+          </div>
+          <div class="swipe-area">
+            <div class="swipe-deck" id="swipeDeck"></div>
+            <div class="swipe-actions">
+              <button class="pill-btn" id="passBtn">Pass ◀</button>
+              <button class="pill-btn pill-btn--primary" id="saveBtn">Save ▶</button>
+            </div>
+            <p class="muted">Keyboard: ← pass · → save · Space expand</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="vault" aria-labelledby="vault-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Vault</p>
+            <h2 id="vault-title">Your saved ideas, ready to export.</h2>
+          </div>
+          <div class="mini-actions">
+            <button class="cta cta--ghost" id="exportJson">Export JSON</button>
+            <button class="cta cta--ghost" id="exportMarkdown">Export Markdown</button>
+          </div>
+        </div>
+        <div class="vault-controls">
+          <input class="search" id="vaultSearch" placeholder="Search ideas..." />
+          <select id="vaultPlatform">
+            <option value="all">All platforms</option>
+          </select>
+          <select id="vaultDifficulty">
+            <option value="all">All difficulty</option>
+          </select>
+          <select id="vaultMonetization">
+            <option value="all">All monetization</option>
+          </select>
+        </div>
+        <div class="vault-grid" id="vaultGrid"></div>
+      </section>
+
+      <section class="view" id="settings" aria-labelledby="settings-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2 id="settings-title">Tune your engine.</h2>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div class="card">
+            <h3>AI Provider</h3>
+            <label class="field">
+              <span>API key (stored locally)</span>
+              <input type="password" id="apiKey" placeholder="sk-..." />
+            </label>
+            <label class="field">
+              <span>Model name</span>
+              <input type="text" id="modelName" placeholder="gpt-4o-mini" />
+            </label>
+            <label class="field">
+              <span>Temperature</span>
+              <input type="range" min="0" max="1" step="0.05" id="temperature" />
+              <div class="range-value" id="temperatureValue">0.7</div>
+            </label>
+            <p class="muted">If no API key is provided, NovaIdea will use a local generator to keep the flow running.</p>
+          </div>
+          <div class="card">
+            <h3>Defaults</h3>
+            <label class="field">
+              <span>Default quantity</span>
+              <select id="defaultQuantity">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Default spice level</span>
+              <select id="defaultSpice">
+                <option value="safe">Safe</option>
+                <option value="balanced">Balanced</option>
+                <option value="wild">Wild</option>
+              </select>
+            </label>
+          </div>
+          <div class="card">
+            <h3>Accessibility</h3>
+            <label class="toggle">
+              <input type="checkbox" id="reducedMotion" />
+              <span>Reduce motion</span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="neonTheme" />
+              <span>Neon theme</span>
+            </label>
+          </div>
+        </div>
       </section>
     </main>
 
-    <div class="toast" id="toast">Prompt copied to clipboard</div>
+    <div class="modal" id="levelUpModal" aria-hidden="true">
+      <div class="modal__content">
+        <h3>Level Up!</h3>
+        <p id="levelUpText">You reached level 2.</p>
+        <button class="cta" id="closeLevelUp">Nice!</button>
+      </div>
+    </div>
+
+    <div class="modal" id="powerUpModal" aria-hidden="true">
+      <div class="modal__content">
+        <h3>Power-up Activated</h3>
+        <p id="powerUpText">Rerolling the top idea.</p>
+        <button class="cta" id="closePowerUp">Continue</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard</div>
   </div>
 
   <script src="script.js"></script>
